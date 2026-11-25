@@ -44,11 +44,26 @@ public:
 
     bool search(std::string word) {
         bool found = false;
-        node* curr = root;
-        return false;
+        return searchHelper(word, root);
     }
     bool searchHelper(std::string word, node* itr) {
-        return false;
+        if (word.size() == 0) {
+            return itr->EOW;
+        }
+        if (word[0] == '.') {
+            for (int i = 0; i < 26; i++) {
+                if (itr->letters[i] != nullptr) {
+                    bool res = searchHelper(word.substr(1, word.size()), itr->letters[i]);
+                    if (res) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else {
+           return searchHelper(word.substr(1, word.size()), itr->letters[word[0] - 'a']);
+        }
     } 
 };
 
@@ -59,5 +74,6 @@ int main()
     dict->addWord("bb");
     dict->addWord("bc");
     dict->addWord("bit");
+    std::cout << dict->
     
 }
